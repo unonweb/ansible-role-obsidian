@@ -1,0 +1,40 @@
+---
+- name: obsidian role
+  tags:
+    - obsidian
+  block:
+
+  # flatpak
+  - name: Flatpak state {{ obsidian.flatpak.state }}
+    become: true
+    community.general.flatpak:
+      name: md.obsidian.Obsidian
+      method: "{{ obsidian.flatpak.scope }}" 
+      state: "{{ obsidian.flatpak.state }}"
+
+  # config
+  - when: 
+    - obsidian.config.src != None
+    - obsidian.config.dst != None
+    - obsidian.user != None
+    block:
+    
+    # mkdir dest_dir
+    - name: Mkdir {{ obsidian.config.dst }}
+      become: true
+      ansible.builtin.file:
+        path: "{{ obsidian.config.dst }}"
+        state: directory
+        owner: "{{ obsidian.user }}"
+        group: "{{ obsidian.user }}"
+        mode: o=rwx,g=,o=
+
+    # copy config
+    - name: Copy config {{ obsidian.config.src }} to {{ obsidian.config.dst }}
+      become: true
+      ansible.builtin.copy:
+        src: "{{ obsidian.config.src }}/"
+        dest: "{{ obsidian.config.dst }}"
+        owner: "{{ obsidian.user }}"
+        group: "{{ obsidian.user }}"
+        mode: u=rw,g=,o=

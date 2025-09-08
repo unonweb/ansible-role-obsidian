@@ -1,0 +1,9 @@
+---
+obsidian:
+  user:
+  flatpak:
+    state: present
+    scope: system
+  config:
+    src: # directory
+    dst: # directory

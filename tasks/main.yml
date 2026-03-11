@@ -5,36 +5,36 @@
   block:
 
   # flatpak
-  - name: Flatpak state {{ obsidian.flatpak.state }}
+  - name: Flatpak state {{ obsidian_flatpak_state }}
     become: true
     community.general.flatpak:
       name: md.obsidian.Obsidian
-      method: "{{ obsidian.flatpak.scope }}" 
-      state: "{{ obsidian.flatpak.state }}"
+      method: "{{ obsidian_flatpak_scope }}" 
+      state: "{{ obsidian_flatpak_state }}"
 
   # config
   - when: 
-    - obsidian.config.src != None
-    - obsidian.config.dst != None
-    - obsidian.user != None
+    - obsidian_config_src != None
+    - obsidian_config_dst != None
+    - obsidian_user != None
     block:
     
     # mkdir dest_dir
-    - name: Mkdir {{ obsidian.config.dst }}
+    - name: Mkdir {{ obsidian_config_dst }}
       become: true
       ansible.builtin.file:
-        path: "{{ obsidian.config.dst }}"
+        path: "{{ obsidian_config_dst }}"
         state: directory
-        owner: "{{ obsidian.user }}"
-        group: "{{ obsidian.user }}"
+        owner: "{{ obsidian_user }}"
+        group: "{{ obsidian_user }}"
         mode: o=rwx,g=,o=
 
     # copy config
-    - name: Copy config {{ obsidian.config.src }} to {{ obsidian.config.dst }}
+    - name: Copy config {{ obsidian_config_src }} to {{ obsidian_config_dst }}
       become: true
       ansible.builtin.copy:
-        src: "{{ obsidian.config.src }}/"
-        dest: "{{ obsidian.config.dst }}"
-        owner: "{{ obsidian.user }}"
-        group: "{{ obsidian.user }}"
+        src: "{{ obsidian_config_src }}/"
+        dest: "{{ obsidian_config_dst }}"
+        owner: "{{ obsidian_user }}"
+        group: "{{ obsidian_user }}"
         mode: u=rw,g=,o=

@@ -1,9 +1,6 @@
 ---
-obsidian:
-  user:
-  flatpak:
-    state: present
-    scope: system
-  config:
-    src: # directory
-    dst: # directory
+obsidian_user:
+obsidian_flatpak_state: present
+obsidian_flatpak_scope: system
+obsidian_config_src: # directory
+obsidian_config_dst: # directory

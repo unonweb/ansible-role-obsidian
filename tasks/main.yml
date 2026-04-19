@@ -27,7 +27,7 @@
         state: directory
         owner: "{{ obsidian_user }}"
         group: "{{ obsidian_user }}"
-        mode: o=rwx,g=,o=
+        mode: u=rwx,g=,o=
 
     # copy config
     - name: Copy config {{ obsidian_config_src }} to {{ obsidian_config_dst }}
